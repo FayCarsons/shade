@@ -12,8 +12,19 @@
         b (drop 4 rgb)]
     (mapv (comp read-string to-hex) [r g b])))
 
+(defn parse-uint-color [color-string]
+  (let [[_ r g b] (re-find #"rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)" color-string)]
+    (mapv #(->> %
+                (apply str)
+                parse-long)
+          [r g b])))
+
 (defn parse-palette [[name colors]]
-  [(keyword name) (mapv parse-hex-color colors)])
+  [(keyword name)
+   (mapv #(if (boolean (re-find #"^#" %))
+            (parse-hex-color %)
+            (parse-uint-color %))
+         colors)])
 
 (defn parse-palettes 
   "parses hex RGB palettes in the format [[name [#rrggbb]]]"
@@ -48,17 +59,6 @@
                 colors (vec (remove empty? (mapv #(s/replace % #"[=|\"]" "")
                                                  (rest split-s))))])
     [(keyword name) (mapv parse-hex-color colors)]))
-
-(let [single (parse-palette ["one" ["#765843" "#765843" "#765843" "#765843"]])
-      multi (parse-palettes [["one" ["#765843" "#765843" "#765843" "#765843"]]
-                             ["two" ["#765843" "#765843" "#765843" "#765843"]]
-                             ["three" ["#765843" "#765843" "#765843" "#765843"]]])
-      R (parse-r-palette "name = c(\"#001122\" \"#334455\")")]
-  (print single multi R))
-
-(parse-palettes [["one" ["#765843" "#765843" "#765843" "#765843"]]
-                 ["two" ["#765843" "#765843" "#765843" "#765843"]]
-                 ["three" ["#765843" "#765843" "#765843" "#765843"]]])
 
  
 
