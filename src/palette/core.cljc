@@ -19,7 +19,9 @@
                 parse-long)
           [r g b])))
 
-(defn parse-palette [[name colors]]
+(defn parse-palette 
+  "parses hex/rgb palete in the format [name [#rrggbb #rrggbb ...]]"
+  [[name colors]]
   [(keyword name)
    (mapv #(if (boolean (re-find #"^#" %))
             (parse-hex-color %)
@@ -27,7 +29,10 @@
          colors)])
 
 (defn parse-palettes 
-  "parses hex RGB palettes in the format [name [#rrggbb]]"
+  "parses hex RGB palettes in the format 
+  [[name [#rrggbb]]
+   [name [#rrggbb]]
+   [name [#rrggbb]]]"
   [palettes]
   (into {}
         (mapv parse-palette

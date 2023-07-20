@@ -295,3 +295,23 @@
     [61 114 162]
     [20 73 121]
     [0 52 100]]})
+
+(reduce (fn [last current]
+          {:num-palettes (+ (:num-palettes last)
+                            (:num-palettes current))
+           :colors (+ (:colors last)
+                      (:colors current))})
+        (mapv (fn [m]
+                (let [palettes (-> m
+                                   vals
+                                   count)
+                      colors (->> m
+                                  vals
+                                  (mapv count)
+                                  (apply +))]
+                  {:num-palettes palettes
+                   :colors colors}))
+              [met-palettes
+               pnw-palettes
+               wes-anderson-palettes
+               mexbrewer]))
