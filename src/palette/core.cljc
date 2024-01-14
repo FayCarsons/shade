@@ -1,6 +1,8 @@
 (ns palette.core
   (:require [clojure.string :as s]
-            [clojure.edn :refer [read-string]]))
+            [clojure.edn :refer [read-string]]
+            [palette.palettes :refer [met-palettes pnw-palettes wes-anderson-palettes mexbrewer]]
+            [palette.demo :refer [create-demo]]))
 
 (defn parse-hex-color [hex-string]
   (let [to-hex (fn [s]

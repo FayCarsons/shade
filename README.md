@@ -1,4 +1,10 @@
-A collection of color palettes for Clojure/script, taken from [MetBrewer](https://github.com/BlakeRMills/MetBrewer), [PNWColors](https://github.com/jakelawlor/PNWColors), and [WesAnderson](https://github.com/karthik/wesanderson) as well as some utilities for parsing color palettes into CLJ/S hash-maps.
+# Shade
+A collection of color palettes for Clojure/script, derived from various R color palette packages.
+
+All palettes and palette creating tools are exposed in palette.core.clj.
+A 'demo' showing all palettes can be viewed by running core/create-demo, starting an HTTP server in the root, and visiting it in the browser.
+
+## Palette Tools
 
 Palettes are in palette.palettes, tools are in palette.core.
 External palettes may be parsed like so: 
